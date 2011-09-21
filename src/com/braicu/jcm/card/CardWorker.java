@@ -23,7 +23,9 @@
 package com.braicu.jcm.card;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Random;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -37,8 +39,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JComboBox;
 
 
-
-
 import com.braicu.jcm.card.cap.structure.Applet;
 import com.braicu.jcm.card.cap.structure.Header;
 import com.braicu.jcm.card.cap.structure.StaticField;
@@ -46,17 +46,14 @@ import com.braicu.jcm.card.cap.utils.CAPToIJCInputStream;
 import com.braicu.jcm.layout.JTextAreaOutputStream;
 import com.braicu.jcm.utils.ByteUtils;
 import com.braicu.jcm.utils.Settings;
-import com.linuxnet.jpcsc.Card;
-import com.linuxnet.jpcsc.Context;
-import com.linuxnet.jpcsc.PCSC;
+import javax.smartcardio.*;
 
 /*
  * Class containing all card APDU commands/operations
  */
 public class CardWorker {
-
-	private Context cardContext;
-	private Card cardManager;
+	private Card card;
+	private CardChannel channel;
 	private byte[] static_S_ENC = new byte[16];
 	private byte[] static_S_MAC = new byte[16];
 	private byte[] static_DEK  = new byte[16];
@@ -324,15 +321,16 @@ public class CardWorker {
 		}        
 	}
 
-	public boolean authenticate(String[] keys, boolean deriveKeys) {
+	public boolean authenticate(String[] keys, boolean deriveKeys) throws CardException {
 		print("Open terminal ...");
 
 		System.out.println("EstablishContext(): ...");
-		cardContext = new Context();
-		cardContext.EstablishContext(PCSC.SCOPE_SYSTEM, null, null);
-
-		String[] sa = cardContext.ListReaders();
-		if (sa.length == 0){
+		TerminalFactory tf = TerminalFactory.getDefault();
+		CardTerminals terminals = tf.terminals();
+		
+		
+		
+		if (terminals.list().size() == 0){
 			alwaysPrint("No reader detected. Make sure reader is avalaiable and start again.");
 			return false;
 		}
@@ -340,13 +338,17 @@ public class CardWorker {
 		System.out.println("Wait for card in a certain reader ...");
 		System.out.println("Pick reader ...");
 
-
+		CardTerminal term;
 		try {
-		cardManager = cardContext.Connect(sa[Settings.getSelectedReader()], PCSC.SHARE_EXCLUSIVE, PCSC.PROTOCOL_T0|PCSC.PROTOCOL_T1);
+			term = terminals.list().get(Settings.getSelectedReader());
+			card = term.connect("*");
+			channel = card.getBasicChannel();
+
+		} catch (CardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch (Exception ex) {
-			alwaysPrint(ex.getMessage());
-		}
+		
 
 		print("**********************");
 		print("Selecting Card Manager");
@@ -520,8 +522,8 @@ public class CardWorker {
 
 	public void disconnectCard(){
 		try {
-			cardManager.Disconnect(PCSC.LEAVE_CARD);
-			cardContext.ReleaseContext();
+			channel.close();
+			card.disconnect(true);
 		}
 		catch (Exception ex) {
 
@@ -1154,20 +1156,36 @@ public class CardWorker {
 		return registerAPDU;
 	}
 
-	public String[] getReaders() {
-		cardContext = new Context();
-		cardContext.EstablishContext(PCSC.SCOPE_SYSTEM, null, null);
-		String[] sa = cardContext.ListReaders();
-		cardContext.ReleaseContext();
+	public String[] getReaders() throws CardException {
+		TerminalFactory tf = TerminalFactory.getDefault();
+		CardTerminals terminals = tf.terminals();
+		terminals.list();
+		List<CardTerminal> list = terminals.list(CardTerminals.State.ALL);
+		String[] sa = new String[list.size()];
+		for (int i=0; i<list.size(); i++) {
+			sa[i] = list.get(i).getName();
+		}	
 		return sa;
 	}
 	
 	
 	private byte[] cardTransmit(byte[] apdu, int p, int apduLength) {
-		print("-> " + ByteUtils.htos(apdu));
-		byte[] resp = cardManager.Transmit(apdu, p, apduLength);
-		print("<- " + ByteUtils.htos(resp));
+		byte[] resp = null;
+		try {
+			CommandAPDU command = new CommandAPDU(apdu);
+			
+			print("-> " + ByteUtils.htos(apdu));
+			ResponseAPDU response;
+			response = channel.transmit(command);
+			resp = response.getBytes();
+			print("<- " + ByteUtils.htos(resp));
+		} catch (CardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return resp;
+
+		
 		
 	}
 

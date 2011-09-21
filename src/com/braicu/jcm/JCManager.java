@@ -735,7 +735,7 @@ public class JCManager extends javax.swing.JFrame {
       
       private void cbReaderItemStateChanged(ItemEvent evt) {
     	  if (cbReader.getItemCount()>0)
-    	  Settings.setSelectedReader(cbReader.getSelectedIndex());
+    		  Settings.setSelectedReader(cbReader.getSelectedIndex());
     	  else {
         	  Settings.setSelectedReader(-1);    		  
     	  }
