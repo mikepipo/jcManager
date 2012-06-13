@@ -23,6 +23,9 @@ import com.braicu.jcm.utils.Settings;
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -38,7 +41,6 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 
 
 public class JCManager extends javax.swing.JFrame {
@@ -108,6 +110,9 @@ public class JCManager extends javax.swing.JFrame {
     private JScrollPane jsp;
     private JFileChooser fc;
     private File f;
+    private JPanel panel;
+    private JPanel panel_1;
+    private JPanel panel_2;
 
 	
 	/**
@@ -139,141 +144,250 @@ public class JCManager extends javax.swing.JFrame {
 				{
 					tpMain = new JTabbedPane();
 					getContentPane().add(tpMain, BorderLayout.NORTH);
-
 					//bb
-
-					tpMain.setPreferredSize(new java.awt.Dimension(665, 258));
 					{
 						pOne = new JPanel();
 						tpMain.addTab("Manage Card", null, pOne, null);
-						pOne.setLayout(null);
-						pOne.setPreferredSize(new java.awt.Dimension(666, 196));
+						GridBagLayout gbl_pOne = new GridBagLayout();
+						gbl_pOne.columnWidths = new int[]{0, 0, 0};
+						gbl_pOne.rowHeights = new int[]{0, 0, 0, 0, 0};
+						gbl_pOne.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+						gbl_pOne.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+						pOne.setLayout(gbl_pOne);
 						{
 							panelAuthKeys = new JPanel();
-							pOne.add(panelAuthKeys);
-							panelAuthKeys.setBounds(3, 10, 327, 88);
+							GridBagConstraints gbc_panelAuthKeys = new GridBagConstraints();
+							gbc_panelAuthKeys.fill = GridBagConstraints.BOTH;
+							gbc_panelAuthKeys.insets = new Insets(0, 0, 5, 5);
+							gbc_panelAuthKeys.gridx = 0;
+							gbc_panelAuthKeys.gridy = 0;
+							pOne.add(panelAuthKeys, gbc_panelAuthKeys);
 							panelAuthKeys.setBorder(BorderFactory.createTitledBorder("Authentication Keys"));
 							panelAuthKeys.setOpaque(false);
-							panelAuthKeys.setLayout(null);
+							GridBagLayout gbl_panelAuthKeys = new GridBagLayout();
+							gbl_panelAuthKeys.columnWidths = new int[]{0, 0, 0};
+							gbl_panelAuthKeys.rowHeights = new int[]{0, 0, 0, 0};
+							gbl_panelAuthKeys.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+							gbl_panelAuthKeys.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+							panelAuthKeys.setLayout(gbl_panelAuthKeys);
+							{
+								lbOldKey1 = new JLabel();
+								GridBagConstraints gbc_lbOldKey1 = new GridBagConstraints();
+								gbc_lbOldKey1.anchor = GridBagConstraints.EAST;
+								gbc_lbOldKey1.insets = new Insets(0, 0, 5, 5);
+								gbc_lbOldKey1.gridx = 0;
+								gbc_lbOldKey1.gridy = 0;
+								panelAuthKeys.add(lbOldKey1, gbc_lbOldKey1);
+								lbOldKey1.setText("Key 1 (S_ENC)");
+							}
 							{
 								tfOldKey1 = new JFormattedTextField();
-								panelAuthKeys.add(tfOldKey1);
-								tfOldKey1.setBounds(82, 16, 238, 19);
+								GridBagConstraints gbc_tfOldKey1 = new GridBagConstraints();
+								gbc_tfOldKey1.fill = GridBagConstraints.BOTH;
+								gbc_tfOldKey1.insets = new Insets(0, 0, 5, 0);
+								gbc_tfOldKey1.gridx = 1;
+								gbc_tfOldKey1.gridy = 0;
+								panelAuthKeys.add(tfOldKey1, gbc_tfOldKey1);
 								tfOldKey1.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										tfOldKey1FocusLost(evt);
 									}
 								});
 							}
+							
+							//bb
+							
+							tfOldKey1.setText(Settings.props.getProperty("AuthKey1"));
 							{
-								lbOldKey1 = new JLabel();
-								panelAuthKeys.add(lbOldKey1);
-								lbOldKey1.setText("Key 1 (S_ENC)");
-								lbOldKey1.setBounds(7, 17, 73, 16);
+								lbOldKey2 = new JLabel();
+								GridBagConstraints gbc_lbOldKey2 = new GridBagConstraints();
+								gbc_lbOldKey2.anchor = GridBagConstraints.EAST;
+								gbc_lbOldKey2.insets = new Insets(0, 0, 5, 5);
+								gbc_lbOldKey2.gridx = 0;
+								gbc_lbOldKey2.gridy = 1;
+								panelAuthKeys.add(lbOldKey2, gbc_lbOldKey2);
+								lbOldKey2.setText("Key 2 (S_MAC)");
 							}
 							{
 								tfOldKey2 = new JFormattedTextField();
-								panelAuthKeys.add(tfOldKey2);
-								tfOldKey2.setBounds(82, 38, 238, 19);
+								GridBagConstraints gbc_tfOldKey2 = new GridBagConstraints();
+								gbc_tfOldKey2.fill = GridBagConstraints.BOTH;
+								gbc_tfOldKey2.insets = new Insets(0, 0, 5, 0);
+								gbc_tfOldKey2.gridx = 1;
+								gbc_tfOldKey2.gridy = 1;
+								panelAuthKeys.add(tfOldKey2, gbc_tfOldKey2);
 								tfOldKey2.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										tfOldKey2FocusLost(evt);
 									}
 								});
 							}
+							tfOldKey2.setText(Settings.props.getProperty("AuthKey2"));
 							{
-								lbOldKey2 = new JLabel();
-								panelAuthKeys.add(lbOldKey2);
-								lbOldKey2.setText("Key 2 (S_MAC)");
-								lbOldKey2.setBounds(7, 39, 73, 16);
+								lbOldKey3 = new JLabel();
+								GridBagConstraints gbc_lbOldKey3 = new GridBagConstraints();
+								gbc_lbOldKey3.anchor = GridBagConstraints.EAST;
+								gbc_lbOldKey3.insets = new Insets(0, 0, 0, 5);
+								gbc_lbOldKey3.gridx = 0;
+								gbc_lbOldKey3.gridy = 2;
+								panelAuthKeys.add(lbOldKey3, gbc_lbOldKey3);
+								lbOldKey3.setText("Key 3 (DEK)");
 							}
 							{
 								tfOldKey3 = new JFormattedTextField();
-								panelAuthKeys.add(tfOldKey3);
-								tfOldKey3.setBounds(82, 60, 238, 19);
+								GridBagConstraints gbc_tfOldKey3 = new GridBagConstraints();
+								gbc_tfOldKey3.fill = GridBagConstraints.BOTH;
+								gbc_tfOldKey3.gridx = 1;
+								gbc_tfOldKey3.gridy = 2;
+								panelAuthKeys.add(tfOldKey3, gbc_tfOldKey3);
 								tfOldKey3.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										tfOldKey3FocusLost(evt);
 									}
 								});
 							}
-							{
-								lbOldKey3 = new JLabel();
-								panelAuthKeys.add(lbOldKey3);
-								lbOldKey3.setText("Key 3 (DEK)");
-								lbOldKey3.setBounds(7, 61, 73, 16);
-							}
+							tfOldKey3.setText(Settings.props.getProperty("AuthKey3"));
 						}
 						{
 							panelNewKeys = new JPanel();
-							pOne.add(panelNewKeys);
+							GridBagConstraints gbc_panelNewKeys = new GridBagConstraints();
+							gbc_panelNewKeys.fill = GridBagConstraints.BOTH;
+							gbc_panelNewKeys.insets = new Insets(0, 0, 5, 0);
+							gbc_panelNewKeys.gridx = 1;
+							gbc_panelNewKeys.gridy = 0;
+							pOne.add(panelNewKeys, gbc_panelNewKeys);
 							panelNewKeys.setOpaque(false);
 							panelNewKeys.setBorder(BorderFactory.createTitledBorder("New Keys"));
-							panelNewKeys.setBounds(331, 10, 327, 88);
-							panelNewKeys.setLayout(null);
+							GridBagLayout gbl_panelNewKeys = new GridBagLayout();
+							gbl_panelNewKeys.columnWidths = new int[]{0, 0, 0};
+							gbl_panelNewKeys.rowHeights = new int[]{0, 0, 0, 0};
+							gbl_panelNewKeys.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+							gbl_panelNewKeys.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+							panelNewKeys.setLayout(gbl_panelNewKeys);
 							{
-								tfNewKey3 = new JFormattedTextField();
-								panelNewKeys.add(tfNewKey3);
-								tfNewKey3.setBounds(82, 58, 238, 19);
-								tfNewKey3.addFocusListener(new FocusAdapter() {
-									public void focusLost(FocusEvent evt) {
-										tfNewKey3FocusLost(evt);
-									}
-								});
-							}
-							{
-								lbNewKey3 = new JLabel();
-								panelNewKeys.add(lbNewKey3);
-								lbNewKey3.setText("Key 3 (DEK)");
-								lbNewKey3.setBounds(7, 60, 73, 16);
-							}
-							{
-								tfNewKey2 = new JFormattedTextField();
-								panelNewKeys.add(tfNewKey2);
-								tfNewKey2.setBounds(82, 37, 238, 19);
-								tfNewKey2.addFocusListener(new FocusAdapter() {
-									public void focusLost(FocusEvent evt) {
-										tfNewKey2FocusLost(evt);
-									}
-								});
-							}
-							{
-								lbNewKey2 = new JLabel();
-								panelNewKeys.add(lbNewKey2);
-								lbNewKey2.setText("Key 2 (S_MAC)");
-								lbNewKey2.setBounds(7, 38, 73, 16);
+								lbNewKey1 = new JLabel();
+								GridBagConstraints gbc_lbNewKey1 = new GridBagConstraints();
+								gbc_lbNewKey1.anchor = GridBagConstraints.EAST;
+								gbc_lbNewKey1.insets = new Insets(0, 0, 5, 5);
+								gbc_lbNewKey1.gridx = 0;
+								gbc_lbNewKey1.gridy = 0;
+								panelNewKeys.add(lbNewKey1, gbc_lbNewKey1);
+								lbNewKey1.setText("Key 1 (S_ENC)");
 							}
 							{
 								tfNewKey1 = new JFormattedTextField();
-								panelNewKeys.add(tfNewKey1);
-								tfNewKey1.setBounds(82, 15, 238, 19);
+								GridBagConstraints gbc_tfNewKey1 = new GridBagConstraints();
+								gbc_tfNewKey1.fill = GridBagConstraints.BOTH;
+								gbc_tfNewKey1.insets = new Insets(0, 0, 5, 0);
+								gbc_tfNewKey1.gridx = 1;
+								gbc_tfNewKey1.gridy = 0;
+								panelNewKeys.add(tfNewKey1, gbc_tfNewKey1);
 								tfNewKey1.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
 										tfNewKey1FocusLost(evt);
 									}
 								});
 							}
+							tfNewKey1.setText(Settings.props.getProperty("NewKey1"));
 							{
-								lbNewKey1 = new JLabel();
-								panelNewKeys.add(lbNewKey1);
-								lbNewKey1.setText("Key 1 (S_ENC)");
-								lbNewKey1.setBounds(7, 16, 73, 16);
+								lbNewKey2 = new JLabel();
+								GridBagConstraints gbc_lbNewKey2 = new GridBagConstraints();
+								gbc_lbNewKey2.anchor = GridBagConstraints.EAST;
+								gbc_lbNewKey2.insets = new Insets(0, 0, 5, 5);
+								gbc_lbNewKey2.gridx = 0;
+								gbc_lbNewKey2.gridy = 1;
+								panelNewKeys.add(lbNewKey2, gbc_lbNewKey2);
+								lbNewKey2.setText("Key 2 (S_MAC)");
 							}
+							{
+								tfNewKey2 = new JFormattedTextField();
+								GridBagConstraints gbc_tfNewKey2 = new GridBagConstraints();
+								gbc_tfNewKey2.fill = GridBagConstraints.BOTH;
+								gbc_tfNewKey2.insets = new Insets(0, 0, 5, 0);
+								gbc_tfNewKey2.gridx = 1;
+								gbc_tfNewKey2.gridy = 1;
+								panelNewKeys.add(tfNewKey2, gbc_tfNewKey2);
+								tfNewKey2.addFocusListener(new FocusAdapter() {
+									public void focusLost(FocusEvent evt) {
+										tfNewKey2FocusLost(evt);
+									}
+								});
+							}
+							tfNewKey2.setText(Settings.props.getProperty("NewKey2"));
+							{
+								lbNewKey3 = new JLabel();
+								GridBagConstraints gbc_lbNewKey3 = new GridBagConstraints();
+								gbc_lbNewKey3.anchor = GridBagConstraints.EAST;
+								gbc_lbNewKey3.insets = new Insets(0, 0, 0, 5);
+								gbc_lbNewKey3.gridx = 0;
+								gbc_lbNewKey3.gridy = 2;
+								panelNewKeys.add(lbNewKey3, gbc_lbNewKey3);
+								lbNewKey3.setText("Key 3 (DEK)");
+							}
+							{
+								tfNewKey3 = new JFormattedTextField();
+								GridBagConstraints gbc_tfNewKey3 = new GridBagConstraints();
+								gbc_tfNewKey3.fill = GridBagConstraints.BOTH;
+								gbc_tfNewKey3.gridx = 1;
+								gbc_tfNewKey3.gridy = 2;
+								panelNewKeys.add(tfNewKey3, gbc_tfNewKey3);
+								tfNewKey3.addFocusListener(new FocusAdapter() {
+									public void focusLost(FocusEvent evt) {
+										tfNewKey3FocusLost(evt);
+									}
+								});
+							}
+							tfNewKey3.setText(Settings.props.getProperty("NewKey3"));
 						}
-						{
-							lbReader = new JLabel();
-							pOne.add(lbReader);
-							lbReader.setText("Select Card Reader");
-							lbReader.setBounds(10, 109, 93, 14);
-						}
-						{
-							ComboBoxModel cbReaderModel = 
+						ComboBoxModel cbReaderModel = 
 								new DefaultComboBoxModel(
 										new String[] { "Item One", "Item Two" });
+						{
+							panel_1 = new JPanel();
+							GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+							gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+							gbc_panel_1.fill = GridBagConstraints.BOTH;
+							gbc_panel_1.gridx = 0;
+							gbc_panel_1.gridy = 1;
+							pOne.add(panel_1, gbc_panel_1);
+							GridBagLayout gbl_panel_1 = new GridBagLayout();
+							gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
+							gbl_panel_1.rowHeights = new int[]{0, 0};
+							gbl_panel_1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+							gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+							panel_1.setLayout(gbl_panel_1);
+							{
+								lbReader = new JLabel();
+								GridBagConstraints gbc_lbReader = new GridBagConstraints();
+								gbc_lbReader.anchor = GridBagConstraints.EAST;
+								gbc_lbReader.insets = new Insets(0, 0, 0, 5);
+								gbc_lbReader.gridx = 0;
+								gbc_lbReader.gridy = 0;
+								panel_1.add(lbReader, gbc_lbReader);
+								lbReader.setText("Select Card Reader");
+							}
 							cbReader = new JComboBox();
-							pOne.add(getCbReader());
+							GridBagConstraints gbc_cbReader = new GridBagConstraints();
+							gbc_cbReader.fill = GridBagConstraints.HORIZONTAL;
+							gbc_cbReader.insets = new Insets(0, 0, 0, 5);
+							gbc_cbReader.gridx = 1;
+							gbc_cbReader.gridy = 0;
+							panel_1.add(cbReader, gbc_cbReader);
 							cbReader.setModel(cbReaderModel);
-							cbReader.setBounds(109, 105, 156, 20);
+							{
+								btRefresh = new JButton();
+								GridBagConstraints gbc_btRefresh = new GridBagConstraints();
+								gbc_btRefresh.gridx = 2;
+								gbc_btRefresh.gridy = 0;
+								panel_1.add(btRefresh, gbc_btRefresh);
+								btRefresh.setBorderPainted(false);
+								btRefresh.setIcon(new ImageIcon(getClass().getClassLoader().getResource("img/Refresh16.gif")));
+								btRefresh.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										btRefreshActionPerformed(evt);
+									}
+								});
+							}
 							cbReader.addItemListener(new ItemListener() {
 								public void itemStateChanged(ItemEvent evt) {
 									cbReaderItemStateChanged(evt);
@@ -281,77 +395,119 @@ public class JCManager extends javax.swing.JFrame {
 							});
 						}
 						{
-							btRefresh = new JButton();
-							pOne.add(btRefresh);
-							btRefresh.setBounds(268, 104, 29, 21);
-							btRefresh.setBorderPainted(false);
-							btRefresh.setIcon(new ImageIcon(getClass().getClassLoader().getResource("img/Refresh16.gif")));
-							btRefresh.setSize(29, 22);
-							btRefresh.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									btRefreshActionPerformed(evt);
-								}
-							});
-						}
-						{
-							lbCMAID = new JLabel();
-							pOne.add(lbCMAID);
-							lbCMAID.setText("CardManager AID");
-							lbCMAID.setBounds(343, 108, 86, 14);
-						}
-						{
-							tfCMAID = new JFormattedTextField();
-							pOne.add(getTfCMAID());
-							tfCMAID.setBounds(439, 105, 180, 20);
-							tfCMAID.addFocusListener(new FocusAdapter() {
-								public void focusLost(FocusEvent evt) {
-									tfCMAIDFocusLost(evt);
-								}
-							});
-						}
-						{
-							panelOPKeys = new JPanel();
-							pOne.add(panelOPKeys);
-							pOne.add(getPanelCAP());
-							pOne.add(getBtAuthenticate());
-							pOne.add(getBtGetInfo());
-							pOne.add(getBtResetCard());
-							panelOPKeys.setBounds(4, 136, 321, 58);
-							panelOPKeys.setBorder(BorderFactory.createTitledBorder("Manage keys"));
-							panelOPKeys.setLayout(null);
+							panel_2 = new JPanel();
+							GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+							gbc_panel_2.insets = new Insets(0, 0, 5, 0);
+							gbc_panel_2.fill = GridBagConstraints.BOTH;
+							gbc_panel_2.gridx = 1;
+							gbc_panel_2.gridy = 1;
+							pOne.add(panel_2, gbc_panel_2);
+							GridBagLayout gbl_panel_2 = new GridBagLayout();
+							gbl_panel_2.columnWidths = new int[]{0, 0, 0};
+							gbl_panel_2.rowHeights = new int[]{0, 0};
+							gbl_panel_2.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+							gbl_panel_2.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+							panel_2.setLayout(gbl_panel_2);
 							{
-								tfKeyset = new JTextField();
-								panelOPKeys.add(tfKeyset);
-								tfKeyset.setBounds(55, 22, 40, 20);
-								tfKeyset.addFocusListener(new FocusAdapter() {
+								lbCMAID = new JLabel();
+								GridBagConstraints gbc_lbCMAID = new GridBagConstraints();
+								gbc_lbCMAID.anchor = GridBagConstraints.EAST;
+								gbc_lbCMAID.insets = new Insets(0, 0, 0, 5);
+								gbc_lbCMAID.gridx = 0;
+								gbc_lbCMAID.gridy = 0;
+								panel_2.add(lbCMAID, gbc_lbCMAID);
+								lbCMAID.setText("CardManager AID");
+							}
+							{
+								tfCMAID = new JFormattedTextField();
+								GridBagConstraints gbc_tfCMAID = new GridBagConstraints();
+								gbc_tfCMAID.fill = GridBagConstraints.HORIZONTAL;
+								gbc_tfCMAID.gridx = 1;
+								gbc_tfCMAID.gridy = 0;
+								panel_2.add(tfCMAID, gbc_tfCMAID);
+								tfCMAID.addFocusListener(new FocusAdapter() {
 									public void focusLost(FocusEvent evt) {
-										tfKeysetFocusLost(evt);
+										tfCMAIDFocusLost(evt);
 									}
 								});
 							}
-							{
-								lbKeyset = new JLabel();
-								panelOPKeys.add(lbKeyset);
-								lbKeyset.setText("Keyset");
-								lbKeyset.setBounds(16, 25, 33, 14);
-							}
-							{
-								rbAddKeys = new JRadioButton();
-								panelOPKeys.add(rbAddKeys);
-								rbAddKeys.setText("Add");
-								rbAddKeys.setBounds(105, 11, 45, 23);
-								getBgKeys().add(rbAddKeys);
-							}
-							{
-								bgModifyKeys = new JRadioButton();
-								panelOPKeys.add(bgModifyKeys);
-								panelOPKeys.add(getBtAddKeys());
-								bgModifyKeys.setText("Modify");
-								bgModifyKeys.setBounds(105, 30, 57, 23);
-								getBgKeys().add(bgModifyKeys);
-								bgModifyKeys.setSelected(true);
-							}
+							tfCMAID.setText(Settings.props.getProperty("CMAID"));
 						}
+						panelOPKeys = new JPanel();
+						GridBagConstraints gbc_panelOPKeys = new GridBagConstraints();
+						gbc_panelOPKeys.fill = GridBagConstraints.BOTH;
+						gbc_panelOPKeys.insets = new Insets(0, 0, 5, 5);
+						gbc_panelOPKeys.gridx = 0;
+						gbc_panelOPKeys.gridy = 2;
+						pOne.add(panelOPKeys, gbc_panelOPKeys);
+						panelOPKeys.setBorder(BorderFactory.createTitledBorder("Manage keys"));
+						GridBagLayout gbl_panelOPKeys = new GridBagLayout();
+						gbl_panelOPKeys.columnWidths = new int[]{0, 0, 0, 0, 0};
+						gbl_panelOPKeys.rowHeights = new int[]{0, 0, 0};
+						gbl_panelOPKeys.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+						gbl_panelOPKeys.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+						panelOPKeys.setLayout(gbl_panelOPKeys);
+						{
+							lbKeyset = new JLabel();
+							GridBagConstraints gbc_lbKeyset = new GridBagConstraints();
+							gbc_lbKeyset.fill = GridBagConstraints.HORIZONTAL;
+							gbc_lbKeyset.insets = new Insets(0, 0, 0, 5);
+							gbc_lbKeyset.gridx = 0;
+							gbc_lbKeyset.gridy = 0;
+							panelOPKeys.add(lbKeyset, gbc_lbKeyset);
+							lbKeyset.setText("Keyset");
+						}
+						{
+							tfKeyset = new JTextField();
+							GridBagConstraints gbc_tfKeyset = new GridBagConstraints();
+							gbc_tfKeyset.fill = GridBagConstraints.HORIZONTAL;
+							gbc_tfKeyset.insets = new Insets(0, 0, 0, 5);
+							gbc_tfKeyset.gridx = 1;
+							gbc_tfKeyset.gridy = 0;
+							panelOPKeys.add(tfKeyset, gbc_tfKeyset);
+							tfKeyset.addFocusListener(new FocusAdapter() {
+								public void focusLost(FocusEvent evt) {
+									tfKeysetFocusLost(evt);
+								}
+							});
+						}
+						
+						tfKeyset.setText(Settings.props.getProperty("KeySet"));
+						{
+							rbAddKeys = new JRadioButton();
+							GridBagConstraints gbc_rbAddKeys = new GridBagConstraints();
+							gbc_rbAddKeys.anchor = GridBagConstraints.WEST;
+							gbc_rbAddKeys.insets = new Insets(0, 0, 0, 5);
+							gbc_rbAddKeys.gridx = 2;
+							gbc_rbAddKeys.gridy = 0;
+							panelOPKeys.add(rbAddKeys, gbc_rbAddKeys);
+							rbAddKeys.setText("Add");
+							getBgKeys().add(rbAddKeys);
+						}
+						{
+							GridBagConstraints gbc_btAddKeys = new GridBagConstraints();
+							gbc_btAddKeys.insets = new Insets(0, 0, 0, 0);
+							gbc_btAddKeys.fill = GridBagConstraints.HORIZONTAL;
+							gbc_btAddKeys.gridx = 3;
+							gbc_btAddKeys.gridy = 0;
+							panelOPKeys.add(getBtAddKeys(), gbc_btAddKeys);
+						}
+						bgModifyKeys = new JRadioButton();
+						GridBagConstraints gbc_bgModifyKeys = new GridBagConstraints();
+						gbc_bgModifyKeys.anchor = GridBagConstraints.WEST;
+						gbc_bgModifyKeys.insets = new Insets(0, 0, 0, 5);
+						gbc_bgModifyKeys.gridx = 2;
+						gbc_bgModifyKeys.gridy = 1;
+						panelOPKeys.add(bgModifyKeys, gbc_bgModifyKeys);
+						bgModifyKeys.setText("Modify");
+						getBgKeys().add(bgModifyKeys);
+						bgModifyKeys.setSelected(true);
+						GridBagConstraints gbc_panelCAP = new GridBagConstraints();
+						gbc_panelCAP.insets = new Insets(0, 0, 5, 0);
+						gbc_panelCAP.fill = GridBagConstraints.BOTH;
+						gbc_panelCAP.gridx = 1;
+						gbc_panelCAP.gridy = 2;
+						pOne.add(getPanelCAP(), gbc_panelCAP);
 					}
 					{
 						pTwo = new JPanel();
@@ -425,24 +581,39 @@ public class JCManager extends javax.swing.JFrame {
 			
 			pack();
 			pack();
-			this.setSize(681, 432);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		//bb
-		
-		tfOldKey1.setText(Settings.props.getProperty("AuthKey1"));
-		tfOldKey2.setText(Settings.props.getProperty("AuthKey2"));
-		tfOldKey3.setText(Settings.props.getProperty("AuthKey3"));
-		tfNewKey1.setText(Settings.props.getProperty("NewKey1"));
-		tfNewKey2.setText(Settings.props.getProperty("NewKey2"));
-		tfNewKey3.setText(Settings.props.getProperty("NewKey3"));
-		
-		tfKeyset.setText(Settings.props.getProperty("KeySet"));
-		tfCMAID.setText(Settings.props.getProperty("CMAID"));
 		tfInstallParameters.setText(Settings.props.getProperty("InstallParameters"));
+		{
+			panel = new JPanel();
+			GridBagConstraints gbc_panel = new GridBagConstraints();
+			gbc_panel.gridwidth = 2;
+			gbc_panel.fill = GridBagConstraints.BOTH;
+			gbc_panel.gridx = 0;
+			gbc_panel.gridy = 3;
+			pOne.add(panel, gbc_panel);
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
+			gbl_panel.rowHeights = new int[]{0, 0};
+			gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			GridBagConstraints gbc_btAuthenticate = new GridBagConstraints();
+			gbc_btAuthenticate.insets = new Insets(0, 0, 0, 5);
+			gbc_btAuthenticate.gridx = 0;
+			gbc_btAuthenticate.gridy = 0;
+			panel.add(getBtAuthenticate(), gbc_btAuthenticate);
+			GridBagConstraints gbc_btGetInfo = new GridBagConstraints();
+			gbc_btGetInfo.insets = new Insets(0, 0, 0, 5);
+			gbc_btGetInfo.gridx = 1;
+			gbc_btGetInfo.gridy = 0;
+			panel.add(getBtGetInfo(), gbc_btGetInfo);
+			GridBagConstraints gbc_btResetCard = new GridBagConstraints();
+			gbc_btResetCard.gridx = 2;
+			gbc_btResetCard.gridy = 0;
+			panel.add(getBtResetCard(), gbc_btResetCard);
+		}
 
 		debugMenuItem.setSelected(Settings.isDebugMode());
     	
@@ -480,7 +651,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(btAddKeys == null) {
 			btAddKeys = new JButton();
 			btAddKeys.setText("Add/Modify Keys");
-			btAddKeys.setBounds(189, 21, 113, 23);
 			btAddKeys.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					btAddKeysActionPerformed(evt);
@@ -493,14 +663,44 @@ public class JCManager extends javax.swing.JFrame {
 	private JPanel getPanelCAP() {
 		if(panelCAP == null) {
 			panelCAP = new JPanel();
-			panelCAP.setLayout(null);
-			panelCAP.setBounds(331, 136, 319, 86);
 			panelCAP.setBorder(BorderFactory.createTitledBorder(null, "Upload & Install CAP", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION));
-			panelCAP.add(getBtFile(), new AnchorConstraint(439, 597, 836, 405, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-			panelCAP.add(getTfFile());
-			panelCAP.add(getLabelParamInstall());
-			panelCAP.add(getTfInstallParameters());
-			panelCAP.add(getBtUpload());
+			GridBagLayout gbl_panelCAP = new GridBagLayout();
+			gbl_panelCAP.columnWidths = new int[]{0, 0, 0, 0, 0};
+			gbl_panelCAP.rowHeights = new int[]{0, 0, 0};
+			gbl_panelCAP.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panelCAP.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			panelCAP.setLayout(gbl_panelCAP);
+			GridBagConstraints gbc_btFile = new GridBagConstraints();
+			gbc_btFile.fill = GridBagConstraints.BOTH;
+			gbc_btFile.insets = new Insets(0, 0, 5, 5);
+			gbc_btFile.gridx = 0;
+			gbc_btFile.gridy = 0;
+			panelCAP.add(getBtFile(), gbc_btFile);
+			GridBagConstraints gbc_tfFile = new GridBagConstraints();
+			gbc_tfFile.fill = GridBagConstraints.BOTH;
+			gbc_tfFile.insets = new Insets(0, 0, 5, 0);
+			gbc_tfFile.gridwidth = 3;
+			gbc_tfFile.gridx = 1;
+			gbc_tfFile.gridy = 0;
+			panelCAP.add(getTfFile(), gbc_tfFile);
+			GridBagConstraints gbc_labelParamInstall = new GridBagConstraints();
+			gbc_labelParamInstall.fill = GridBagConstraints.HORIZONTAL;
+			gbc_labelParamInstall.insets = new Insets(0, 0, 0, 5);
+			gbc_labelParamInstall.gridwidth = 2;
+			gbc_labelParamInstall.gridx = 0;
+			gbc_labelParamInstall.gridy = 1;
+			panelCAP.add(getLabelParamInstall(), gbc_labelParamInstall);
+			GridBagConstraints gbc_tfInstallParameters = new GridBagConstraints();
+			gbc_tfInstallParameters.fill = GridBagConstraints.BOTH;
+			gbc_tfInstallParameters.insets = new Insets(0, 0, 0, 5);
+			gbc_tfInstallParameters.gridx = 2;
+			gbc_tfInstallParameters.gridy = 1;
+			panelCAP.add(getTfInstallParameters(), gbc_tfInstallParameters);
+			GridBagConstraints gbc_btUpload = new GridBagConstraints();
+			gbc_btUpload.fill = GridBagConstraints.BOTH;
+			gbc_btUpload.gridx = 3;
+			gbc_btUpload.gridy = 1;
+			panelCAP.add(getBtUpload(), gbc_btUpload);
 		}
 		return panelCAP;
 	}
@@ -509,7 +709,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(btFile == null) {
 			btFile = new JButton();
 			btFile.setText("File...");
-			btFile.setBounds(12, 20, 61, 23);
 			btFile.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					btFileActionPerformed(evt);
@@ -522,7 +721,6 @@ public class JCManager extends javax.swing.JFrame {
 	public JTextField getTfFile() {
 		if(tfFile == null) {
 			tfFile = new JTextField();
-			tfFile.setBounds(83, 21, 213, 20);
 		}
 		return tfFile;
 	}
@@ -531,7 +729,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(labelParamInstall == null) {
 			labelParamInstall = new JLabel();
 			labelParamInstall.setText("Install parameters");
-			labelParamInstall.setBounds(16, 54, 87, 14);
 		}
 		return labelParamInstall;
 	}
@@ -539,7 +736,6 @@ public class JCManager extends javax.swing.JFrame {
 	private JTextField getTfInstallParameters() {
 		if(tfInstallParameters == null) {
 			tfInstallParameters = new JTextField();
-			tfInstallParameters.setBounds(107, 51, 105, 20);
 			tfInstallParameters.addFocusListener(new FocusAdapter() {
 				public void focusLost(FocusEvent evt) {
 					tfInstallParametersFocusLost(evt);
@@ -553,7 +749,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(btUpload == null) {
 			btUpload = new JButton();
 			btUpload.setText("Upload");
-			btUpload.setBounds(224, 49, 65, 23);
 			btUpload.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					btUploadActionPerformed(evt);
@@ -567,7 +762,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(btAuthenticate == null) {
 			btAuthenticate = new JButton();
 			btAuthenticate.setText("Authenticate");
-			btAuthenticate.setBounds(10, 200, 95, 23);
 			btAuthenticate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					btAuthenticateActionPerformed(evt);
@@ -581,7 +775,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(btGetInfo == null) {
 			btGetInfo = new JButton();
 			btGetInfo.setText("Get Card Info");
-			btGetInfo.setBounds(114, 200, 98, 23);
 			btGetInfo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					btGetInfoActionPerformed(evt);
@@ -595,7 +788,6 @@ public class JCManager extends javax.swing.JFrame {
 		if(btResetCard == null) {
 			btResetCard = new JButton();
 			btResetCard.setText("Reset Card");
-			btResetCard.setBounds(220, 199, 90, 23);
 			btResetCard.setToolTipText("Delete all applets & packages from card");
 			btResetCard.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
